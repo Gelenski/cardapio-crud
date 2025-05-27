@@ -1,0 +1,66 @@
+caminho_cardapio = "cardapio.txt"
+
+def salvar_cardapio(cardapio, caminho):
+    """Salva o cardápio em um arquivo de texto com no formato de lista de dicionários"""
+    with open(caminho, "w", encoding="utf-8") as arquivo:
+        for categoria in cardapio:
+            arquivo.write(f"{categoria['categoria']}\n")
+            for item in categoria['itens']:
+                arquivo.write(f"-{item['nome']}-R${item['preco']:.2f}\n")
+
+def carregar_cardapio(caminho):
+    try:
+        with open(caminho, "r", encoding="utf-8") as arquivo:
+            cardapio = []
+            categoria_atual = None
+            for linha in arquivo:
+                linha = linha.strip()
+                if linha:
+                    if not linha.startswith("-"):
+                        if categoria_atual:
+                            cardapio.append(categoria_atual)
+                        categoria_atual = {"categoria": linha, "itens": []}
+                    else:
+                        nome_item, preco = linha.rsplit("-R$", 1)
+                        preco = float(preco)
+                        categoria_atual["itens"].append({"nome": nome_item.strip(), "preco": preco})
+            if categoria_atual:
+                cardapio.append(categoria_atual)
+            return cardapio
+    except:
+        return []
+
+print(carregar_cardapio(caminho_cardapio))
+
+salvar_cardapio([
+    {
+        "categoria": "Bebidas",
+        "itens": [
+            {"nome": "Refrigerante", "preco": 5.00},
+            {"nome": "Suco", "preco": 4.50}
+        ]
+    },
+    {
+        "categoria": "Entradas",
+        "itens": [
+            {"nome": "Salada", "preco": 7.00},
+            {"nome": "Sopa", "preco": 6.50}
+        ]
+    },
+    {
+        "categoria": "Pratos Principais",
+        "itens": [
+            {"nome": "Pizza", "preco": 20.00},
+            {"nome": "Hambúrguer", "preco": 15.00}
+        ]
+    },
+    {
+        "categoria": "Sobremesas",
+        "itens": [
+            {"nome": "Bolo", "preco": 8.00},
+            {"nome": "Sorvete", "preco": 6.00}
+        ]
+    }
+], caminho_cardapio)
+
+print(carregar_cardapio(caminho_cardapio))
