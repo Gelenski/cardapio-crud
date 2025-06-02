@@ -9,6 +9,7 @@ def salvar_cardapio(cardapio, caminho):
                 arquivo.write(f"-{item['nome']}-R${item['preco']:.2f}\n")
 
 def carregar_cardapio(caminho):
+    """Carrega o cardápio de um arquivo de texto e retorna uma lista de dicionários"""
     try:
         with open(caminho, "r", encoding="utf-8") as arquivo:
             cardapio = []
@@ -22,12 +23,14 @@ def carregar_cardapio(caminho):
                         categoria_atual = {"categoria": linha, "itens": []}
                     else:
                         nome_item, preco = linha.rsplit("-R$", 1)
+                        # Atribui float para que seja somado posteriormente
                         preco = float(preco)
                         categoria_atual["itens"].append({"nome": nome_item.strip(), "preco": preco})
             if categoria_atual:
                 cardapio.append(categoria_atual)
             return cardapio
     except:
+        print("Cardápio não encontrado, criando um novo.")
         return []
 
 print(carregar_cardapio(caminho_cardapio))
