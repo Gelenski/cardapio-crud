@@ -4,9 +4,9 @@ def salvar_cardapio(cardapio, caminho):
     """Salva o cardápio em um arquivo de texto com no formato de lista de dicionários"""
     with open(caminho, "w", encoding="utf-8") as arquivo:
         for categoria in cardapio:
-            arquivo.write(f"{categoria['categoria']}\n")
+            arquivo.write(f"Categoria: {categoria['categoria']}\n")
             for item in categoria['itens']:
-                arquivo.write(f"-{item['nome']}-R${item['preco']:.2f}\n")
+                arquivo.write(f"    -{item['nome']}-R${item['preco']:.2f}\n")
 
 def carregar_cardapio(caminho):
     """Carrega o cardápio de um arquivo de texto e retorna uma lista de dicionários"""
@@ -33,37 +33,33 @@ def carregar_cardapio(caminho):
         print("Cardápio não encontrado, criando um novo.")
         return []
 
-print(carregar_cardapio(caminho_cardapio))
-
 salvar_cardapio([
     {
         "categoria": "Bebidas",
         "itens": [
             {"nome": "Refrigerante", "preco": 5.00},
-            {"nome": "Suco", "preco": 4.50}
+            {"nome": "Suco", "preco": 5.00}
         ]
     },
     {
         "categoria": "Entradas",
         "itens": [
-            {"nome": "Salada", "preco": 7.00},
-            {"nome": "Sopa", "preco": 6.50}
+            {"nome": "Salada", "preco": 5.00},
+            {"nome": "Sopa", "preco": 5.00}
         ]
     },
     {
         "categoria": "Pratos Principais",
         "itens": [
-            {"nome": "Pizza", "preco": 20.00},
-            {"nome": "Hambúrguer", "preco": 15.00}
+            {"nome": "Pizza", "preco": 5.00},
+            {"nome": "Hambúrguer", "preco": 5.00}
         ]
     },
     {
         "categoria": "Sobremesas",
         "itens": [
-            {"nome": "Bolo", "preco": 8.00},
-            {"nome": "Sorvete", "preco": 6.00}
+            {"nome": "Bolo", "preco": 5.00},
+            {"nome": "Sorvete", "preco": 5.00}
         ]
     }
 ], caminho_cardapio)
-
-print(carregar_cardapio(caminho_cardapio))
