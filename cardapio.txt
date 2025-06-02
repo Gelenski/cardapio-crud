@@ -1,12 +1,12 @@
-Bebidas
--Refrigerante-R$5.00
--Suco-R$4.50
-Entradas
--Salada-R$7.00
--Sopa-R$6.50
-Pratos Principais
--Pizza-R$20.00
--Hambúrguer-R$15.00
-Sobremesas
--Bolo-R$8.00
--Sorvete-R$6.00
+Categoria: Bebidas
+    -Refrigerante-R$5.00
+    -Suco-R$5.00
+Categoria: Entradas
+    -Salada-R$5.00
+    -Sopa-R$5.00
+Categoria: Pratos Principais
+    -Pizza-R$5.00
+    -Hambúrguer-R$5.00
+Categoria: Sobremesas
+    -Bolo-R$5.00
+    -Sorvete-R$5.00
