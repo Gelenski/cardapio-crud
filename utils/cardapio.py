@@ -6,7 +6,7 @@ def salvar_cardapio(cardapio, caminho):
         for categoria in cardapio:
             arquivo.write(f"Categoria: {categoria['categoria']}\n")
             for item in categoria['itens']:
-                arquivo.write(f"    -{item['nome']}-R${item['preco']:.2f}\n")
+                arquivo.write(f"-{item['nome']}-R${item['preco']}\n")
 
 def carregar_cardapio(caminho):
     """Carrega o cardápio de um arquivo de texto e retorna uma lista de dicionários"""

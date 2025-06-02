@@ -1,8 +1,9 @@
-from cardapio import *
+from cardapio import carregar_cardapio, caminho_cardapio
 
 lista = []
 
 def imprimir_itens():
+    """Imprime os itens do cardápio e armazena em uma lista"""
     cardapio = carregar_cardapio(caminho_cardapio)
     contador = 0
     for categoria in cardapio:
@@ -14,9 +15,10 @@ def imprimir_itens():
            print(f'{contador}. {nome} - R${item['preco']}')
            item_indice = {"indice": contador, "nome": nome, 'preco': preco}
            lista.append(item_indice)
-           contador+=1
+           contador += 1
 
 def selecionar_itens():
+    """Permite ao usuário selecionar itens do cardápio e calcula o total"""
     imprimir_itens()
     valores = []
     escolha = input('\nDigite os números dos itens que deseja (separados por vírgula): ').split(',')
