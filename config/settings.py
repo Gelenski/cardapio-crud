@@ -15,6 +15,3 @@ def captura_porcentagem_garcom():
             return print(float(porcentagem))
         else:
             print("Digite um número válido.")
-
-
-captura_porcentagem_garcom()
