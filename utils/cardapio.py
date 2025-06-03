@@ -20,7 +20,8 @@ def carregar_cardapio(caminho):
                     if not linha.startswith("-") and linha.startswith("Categoria:"):
                         if categoria_atual:
                             cardapio.append(categoria_atual)
-                        categoria_atual = {"categoria": linha, "itens": []}
+                        nome_categoria = linha.split("Categoria:", 1)[1].strip()
+                        categoria_atual = {"categoria": nome_categoria, "itens": []}
                     elif linha.startswith("@NOME_RESTAURANTE:"):
                         nome_restaurante = linha.split(": ", 1)[1].strip()
                         
@@ -29,13 +30,12 @@ def carregar_cardapio(caminho):
 
                     else:
                         nome_item, preco = linha.rsplit("-R$", 1)
-                        # Atribui float para que seja somado posteriormente
                         preco = float(preco)
                         categoria_atual["itens"].append({"nome": nome_item.strip(), "preco": preco})
             if categoria_atual:
                 cardapio.append(categoria_atual)
             return cardapio, nome_restaurante, porcentagem_garcom
-        # Retorna o cardápio com índice 0, nome do restaurante com índice 1 e porcentagem do garçom com índice 2
     except:
         print("Cardápio não encontrado, criando um novo.")
-        return []
+        return [], "", 0.0
+
