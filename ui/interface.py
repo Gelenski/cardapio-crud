@@ -1,5 +1,9 @@
+from utils.cardapio import carregar_cardapio, caminho_cardapio
+
 def visualizar_menu():
-    print(" OPÇÕES DISPONÍVEIS ")
+    print()
+    print("-------- OPÇÕES DISPONÍVEIS --------")
+    print()
     print("1. Ver Cardápio")
     print("2. Incluir algo")
     print("3. Excluir algo")
@@ -7,61 +11,108 @@ def visualizar_menu():
     print("7. Encerrar Cardápio")
 
 estoque = {
-    "pratos": [],
-    "drinks": []
+    "entradas": [],
+    "pratos_principais": [],
+    "bebidas": [],
+    "sobremesas": []
 }
 
 def ver_cardapio():
-    print("\n CARDÁPIO ATUAL ")
-    if not estoque["pratos"] and not estoque["drinks"]:
+    if all(not estoque[categoria] for categoria in estoque):
         print("Cardápio vazio no momento.")
-    else:
-        print("Pratos disponíveis:")
-        for item in estoque["pratos"]:
-            print(f"• {item['nome']} - R${item['preco']:.2f}")
-        print("Bebidas disponíveis:")
-        for item in estoque["drinks"]:
-            print(f"• {item['nome']} - R${item['preco']:.2f}")
+        return
 
-def incluir_prato():
-    nome = input("Nome do prato: ")
+    print("\nEntradas disponíveis:")
+    for item in estoque["entradas"]:
+        print(f"• {item['nome']} - R${item['preco']:.2f}")
+
+    print("\nPratos principais disponíveis:")
+    for item in estoque["pratos_principais"]:
+        print(f"• {item['nome']} - R${item['preco']:.2f}")
+
+    print("\nSobremesas disponíveis:")
+    for item in estoque["sobremesas"]:
+        print(f"• {item['nome']} - R${item['preco']:.2f}")
+
+    print("\nBebidas disponíveis:")
+    for item in estoque["bebidas"]:
+        print(f"• {item['nome']} - R${item['preco']:.2f}")
+
+def incluir_entrada():
+    nome = input("Nome da entrada: ")
     try:
-        preco = float(input("Preço do prato: R$ ").replace(",", "."))
-        estoque["pratos"].append({"nome": nome, "preco": preco})
+        preco = float(input("Preço da entrada: R$ ").replace(",", "."))
+        estoque["entradas"].append({"nome": nome, "preco": preco})
         print(f"{nome} foi incluído no cardápio.")
     except ValueError:
         print("Preço inválido. Use apenas números.")
 
-def excluir_prato():
-    nome = input("Nome do prato a remover: ")
-    for item in estoque["pratos"]:
+def excluir_entrada():
+    nome = input("Nome da entrada a remover: ")
+    for item in estoque["entradas"]:
         if item["nome"] == nome:
-            estoque["pratos"].remove(item)
+            estoque["entradas"].remove(item)
             print(f"{nome} foi removido.")
             return
     print(f"{nome} não foi encontrado.")
+
+def incluir_pratos_principais():
+    nome = input("Nome do prato principal: ")
+    try:
+        preco = float(input("Preço do prato: R$ ").replace(",", "."))
+        estoque["pratos_principais"].append({"nome": nome, "preco": preco})
+        print(f"{nome} foi incluído no cardápio.")
+    except ValueError:
+        print("Preço inválido. Use apenas números.")
+
+def excluir_pratos_principais():
+    nome = input("Nome do prato principal a remover: ")
+    for item in estoque["pratos_principais"]:
+        if item["nome"] == nome:
+            estoque["pratos_principais"].remove(item)
+            print(f"{nome} foi removido.")
+            return
+    print(f"{nome} não foi encontrado.")
+
+def incluir_sobremesa():
+    nome = input("Nome da sobremesa: ")
+    try:
+        preco = float(input("Preço da sobremesa: R$ ").replace(",", "."))
+        estoque["sobremesas"].append({"nome": nome, "preco": preco})
+        print(f"{nome} foi incluído no cardápio.")
+    except ValueError:
+        print("Preço inválido. Use apenas números.")
+
+def excluir_sobremesa():
+    nome = input("Nome da sobremesa a remover: ")
+    for item in estoque["sobremesas"]:
+        if item["nome"] == nome:
+            estoque["sobremesas"].remove(item)
+            print(f"{nome} foi removida.")
+            return
+    print(f"{nome} não foi encontrada.")
 
 def incluir_bebida():
     nome = input("Nome da bebida: ")
     try:
         preco = float(input("Preço da bebida: R$ ").replace(",", "."))
-        estoque["drinks"].append({"nome": nome, "preco": preco})
+        estoque["bebidas"].append({"nome": nome, "preco": preco})
         print(f"{nome} foi adicionada ao cardápio.")
     except ValueError:
         print("Preço inválido. Use apenas números.")
 
 def excluir_bebida():
     nome = input("Nome da bebida a remover: ")
-    for item in estoque["drinks"]:
+    for item in estoque["bebidas"]:
         if item["nome"] == nome:
-            estoque["drinks"].remove(item)
+            estoque["bebidas"].remove(item)
             print(f"{nome} foi removida.")
             return
     print(f"{nome} não foi encontrada.")
 
 def limpar_cardapio():
-    estoque["pratos"].clear()
-    estoque["drinks"].clear()
+    for categoria in estoque:
+        estoque[categoria].clear()
     print("Cardápio foi limpo com sucesso.")
 
 while True:
@@ -71,18 +122,26 @@ while True:
     if escolha == "1":
         ver_cardapio()
     elif escolha == "2":
-        tipo = input("Deseja incluir (1) Comida ou (2) Bebida? ")
+        tipo = input("Deseja incluir (1) Entradas, (2) Pratos principais, (3) Sobremesas, (4) Bebidas: ")
         if tipo == "1":
-            incluir_prato()
+            incluir_entrada()
         elif tipo == "2":
+            incluir_pratos_principais()
+        elif tipo == "3":
+            incluir_sobremesa()
+        elif tipo == "4":
             incluir_bebida()
         else:
             print("Opção inválida.")
     elif escolha == "3":
-        tipo = input("Deseja excluir (1) Comida ou (2) Bebida? ")
+        tipo = input("Deseja excluir (1) Entradas, (2) Pratos principais, (3) Sobremesas, (4) Bebidas: ")
         if tipo == "1":
-            excluir_prato()
+            excluir_entrada()
         elif tipo == "2":
+            excluir_pratos_principais()
+        elif tipo == "3":
+            excluir_sobremesa()
+        elif tipo == "4":
             excluir_bebida()
         else:
             print("Opção inválida.")

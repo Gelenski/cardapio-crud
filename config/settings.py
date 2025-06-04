@@ -4,7 +4,6 @@ def captura_nome_restaurante():
         nome = input("Digite o nome do restaurante: ")
         if nome == "":
             print("O nome do restaurante não pode ser vazio.")
-            captura_nome_restaurante()
         return nome
     
 def captura_porcentagem_garcom():
@@ -15,6 +14,3 @@ def captura_porcentagem_garcom():
             return print(float(porcentagem))
         else:
             print("Digite um número válido.")
-
-
-captura_porcentagem_garcom()
