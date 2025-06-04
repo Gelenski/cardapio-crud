@@ -11,6 +11,6 @@ def captura_porcentagem_garcom():
     while True:
         porcentagem = input("Digite a porcentagem dos garçons do restaurante: ")
         if porcentagem.replace(".", "", 1).isdigit():
-            return print(float(porcentagem))
+            return float(porcentagem)
         else:
             print("Digite um número válido.")

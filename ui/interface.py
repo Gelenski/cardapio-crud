@@ -8,7 +8,7 @@ def visualizar_menu():
     print("2. Incluir algo")
     print("3. Excluir algo")
     print("6. Limpar Cardápio")
-    print("7. Encerrar Cardápio")
+    print("7. Encerrar e salvar o cardápio")
 
 estoque = {
     "entradas": [],
