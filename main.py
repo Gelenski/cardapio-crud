@@ -22,7 +22,7 @@ def incluir_item(cardapio, tipo):
         else:
             cardapio.append({"categoria": tipo, "itens": [{"nome": nome, "preco": preco}]})
         print(f"{nome} foi incluído no cardápio.")
-    except ValueError:
+    except:
         print("Preço inválido. Use apenas números.")
 
 def excluir_item(cardapio, tipo):
@@ -65,7 +65,7 @@ def selecionar_itens():
                 if i['indice'] == indice:
                     print(f"- {i['nome']} - R${i['preco']:.2f}")
                     valores.append(i['preco'])
-        except ValueError:
+        except:
             print(f"Entrada inválida: {e}")
     print(f"\nValor total: R${sum(valores):.2f}")
 
@@ -74,7 +74,7 @@ def main():
     cardapio, nome_restaurante, porcentagem_garcom = carregar_cardapio(CAMINHO_CARDAPIO)
 
     if not cardapio:
-        print("Nenhum cardápio encontrado. Criando um novo.")
+        # print("Nenhum cardápio encontrado. Criando um novo.")
         cardapio = []
 
     if not nome_restaurante:
@@ -88,8 +88,9 @@ def main():
         print("1. Ver Cardápio")
         print("2. Incluir algo")
         print("3. Excluir algo")
-        print("6. Limpar Cardápio")
+        print("6. Limpar o cardápio")
         print("7. Encerrar e salvar o cardápio")
+
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
             ver_cardapio(cardapio)
@@ -106,7 +107,7 @@ def main():
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
         else:
-            print("Escolha inválida. Tente novamente.")
+            print("Escolha inválida, digite uma opção válida.")
 
 if __name__ == "__main__":
     main()
