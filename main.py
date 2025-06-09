@@ -31,6 +31,15 @@ def ver_cardapio(cardapio):
         for item in categoria['itens']:
             print(f"• {item['nome']} - R${item['preco']:.2f}")
 
+# def editar_item(cardapio):
+#     tipo=selecionar_categoria()
+#     if not tipo:
+#         return
+#     nome = input(f"Nome do item a editar na categoria '{tipo}': ").strip()
+#     if not nome:
+#         print("Nome não pode estar em branco.")
+#         return
+
 def incluir_item(cardapio):
     tipo = selecionar_categoria()
     if not tipo:
@@ -119,18 +128,21 @@ def main():
         print("1. Ver Cardápio")
         print("2. Incluir item")
         print("3. Excluir item")
-        print("6. Limpar Cardápio")
-        print("7. Encerrar e salvar o cardápio")
+        print("4. Editar item")
+        print("5. Limpar Cardápio")
+        print("6. Encerrar e salvar o cardápio")
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
             ver_cardapio(cardapio)
         elif opcao == "2":
             incluir_item(cardapio)
         elif opcao == "3":
+            editar_item(cardapio)
+        elif opcao == "4":
             excluir_item(cardapio)
-        elif opcao == "6":
+        elif opcao == "5":
             limpar_cardapio(cardapio)
-        elif opcao == "7":
+        elif opcao == "6":
             print("Fechando cardápio.")
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
