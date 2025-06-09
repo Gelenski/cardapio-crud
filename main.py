@@ -2,6 +2,26 @@ from config import carregar_cardapio, salvar_cardapio, captura_nome_restaurante,
 
 CAMINHO_CARDAPIO = "cardapio.txt"
 
+CATEGORIAS_DISPONIVEIS = ["entradas", "pratos_principais", "sobremesas", "bebidas"]
+
+def mostrar_categorias():
+    print("\nCategorias disponíveis:")
+    for idx, cat in enumerate(CATEGORIAS_DISPONIVEIS, start=1):
+        print(f"{idx}. {cat.replace('_', ' ').capitalize()}")
+
+def selecionar_categoria():
+    mostrar_categorias()
+    try:
+        escolha = int(input("Digite o número da categoria: "))
+        if 1 <= escolha <= len(CATEGORIAS_DISPONIVEIS):
+            return CATEGORIAS_DISPONIVEIS[escolha - 1]
+        else:
+            print("Número inválido.")
+            return None
+    except ValueError:
+        print("Entrada inválida. Digite um número.")
+        return None
+
 def ver_cardapio(cardapio):
     if not cardapio:
         print("Cardápio vazio no momento.")
@@ -11,10 +31,16 @@ def ver_cardapio(cardapio):
         for item in categoria['itens']:
             print(f"• {item['nome']} - R${item['preco']:.2f}")
 
-def incluir_item(cardapio, tipo):
-    nome = input(f"Nome do {tipo}: ")
+def incluir_item(cardapio):
+    tipo = selecionar_categoria()
+    if not tipo:
+        return
+    nome = input(f"Nome do item a adicionar na categoria '{tipo}': ").strip()
+    if not nome:
+        print("Nome não pode estar em branco.")
+        return
     try:
-        preco = float(input(f"Preço do {tipo}: R$ ").replace(",", "."))
+        preco = float(input(f"Preço do {nome}: R$ ").replace(",", "."))
         for categoria in cardapio:
             if categoria['categoria'].lower() == tipo.lower():
                 categoria['itens'].append({"nome": nome, "preco": preco})
@@ -25,8 +51,14 @@ def incluir_item(cardapio, tipo):
     except:
         print("Preço inválido. Use apenas números.")
 
-def excluir_item(cardapio, tipo):
-    nome = input(f"Nome do {tipo} a remover: ")
+def excluir_item(cardapio):
+    tipo = selecionar_categoria()
+    if not tipo:
+        return
+    nome = input(f"Nome do item a remover da categoria '{tipo}': ").strip()
+    if not nome:
+        print("Nome não pode estar em branco.")
+        return
     for categoria in cardapio:
         if categoria['categoria'].lower() == tipo.lower():
             for item in categoria['itens']:
@@ -69,7 +101,6 @@ def selecionar_itens():
             print(f"Entrada inválida: {e}")
     print(f"\nValor total: R${sum(valores):.2f}")
 
-
 def main():
     cardapio, nome_restaurante, porcentagem_garcom = carregar_cardapio(CAMINHO_CARDAPIO)
 
@@ -86,8 +117,8 @@ def main():
     while True:
         print("\n-------- OPÇÕES DISPONÍVEIS --------\n")
         print("1. Ver Cardápio")
-        print("2. Incluir algo")
-        print("3. Excluir algo")
+        print("2. Incluir item")
+        print("3. Excluir item")
         print("6. Limpar o cardápio")
         print("7. Encerrar e salvar o cardápio")
 
@@ -95,11 +126,9 @@ def main():
         if opcao == "1":
             ver_cardapio(cardapio)
         elif opcao == "2":
-            tipo = input("Categoria (entradas, pratos_principais, sobremesas, bebidas): ")
-            incluir_item(cardapio, tipo)
+            incluir_item(cardapio)
         elif opcao == "3":
-            tipo = input("Categoria para excluir item (entradas, pratos_principais, sobremesas, bebidas): ")
-            excluir_item(cardapio, tipo)
+            excluir_item(cardapio)
         elif opcao == "6":
             limpar_cardapio(cardapio)
         elif opcao == "7":
