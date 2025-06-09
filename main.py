@@ -18,7 +18,7 @@ def selecionar_categoria():
         else:
             print("Número inválido.")
             return None
-    except ValueError:
+    except:
         print("Entrada inválida. Digite um número.")
         return None
 
@@ -72,6 +72,19 @@ def limpar_cardapio(cardapio):
     cardapio.clear()
     print("Cardápio foi limpo com sucesso.")
 
+    #TODO: Implementar na def main --------------------------------
+
+def buscar_item(item):
+    cardapio, _,_ = carregar_cardapio(CAMINHO_CARDAPIO)
+    for categoria in cardapio:
+        for comida in categoria["itens"]:
+            if comida["nome"].lower() == item.lower():
+                print(f"O item: {comida["nome"]}, está contido no cardápio.")
+                return True
+            else:
+                print("O item digitado não está contido no cardápio.")
+                return False
+        
 def imprimir_itens():
     cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     lista = []
@@ -133,6 +146,7 @@ def main():
             limpar_cardapio(cardapio)
         elif opcao == "7":
             print("Fechando cardápio.")
+            buscar_item("Macarrão")
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
         else:
