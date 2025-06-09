@@ -43,7 +43,7 @@ def limpar_cardapio(cardapio):
 def imprimir_itens():
     cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     lista = []
-    contador = 0
+    contador = 1
     for categoria in cardapio:
         print(f"\n{categoria['categoria'].capitalize()}:")
         for item in categoria['itens']:
@@ -90,6 +90,7 @@ def main():
         print("3. Excluir algo")
         print("6. Limpar Cardápio")
         print("7. Encerrar e salvar o cardápio")
+        print("8. Fechar caixa")
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
             ver_cardapio(cardapio)
@@ -105,6 +106,8 @@ def main():
             print("Fechando cardápio.")
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
+        elif opcao == "8":
+            selecionar_itens()
         else:
             print("Escolha inválida. Tente novamente.")
 
