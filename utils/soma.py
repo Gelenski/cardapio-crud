@@ -1,34 +1,34 @@
-from cardapio import carregar_cardapio, caminho_cardapio
+from utils.cardapio import carregar_cardapio
+from config.config import CAMINHO_CARDAPIO
 
 lista = []
 
 def imprimir_itens():
-    """Imprime os itens do cardápio e armazena em uma lista"""
-    cardapio = carregar_cardapio(caminho_cardapio)
+    cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     contador = 0
     for categoria in cardapio:
-       print()
-       print(f'{categoria['categoria']}')
-       for item in categoria['itens']:
-           nome = item['nome'].replace("-", "")
-           preco = item['preco']
-           print(f'{contador}. {nome} - R${item['preco']}')
-           item_indice = {"indice": contador, "nome": nome, 'preco': preco}
-           lista.append(item_indice)
-           contador += 1
+        print(f"\n{categoria['categoria'].capitalize()}:")
+        for item in categoria['itens']:
+            nome = item['nome'].replace("-", "")
+            preco = item['preco']
+            print(f"{contador}. {nome} - R${preco:.2f}")
+            lista.append({"indice": contador, "nome": nome, "preco": preco})
+            contador += 1
 
 def selecionar_itens():
-    """Permite ao usuário selecionar itens do cardápio e calcula o total"""
     imprimir_itens()
     valores = []
-    escolha = input('\nDigite os números dos itens que deseja (separados por vírgula): ').split(',')
+    escolha = input("\nDigite os números dos itens que deseja (separados por vírgula): ").split(',')
     for e in escolha:
-        indice = int(e.strip())
-        for i in lista:
-            if i['indice'] == indice:
-                print(f"- {i['nome']} - R${i['preco']}")
-                valores.append(i['preco'])
-    print()           
-    print(f'O valor total é: R${sum(valores)}')
+        try:
+            indice = int(e.strip())
+            for i in lista:
+                if i['indice'] == indice:
+                    print(f"- {i['nome']} - R${i['preco']:.2f}")
+                    valores.append(i['preco'])
+        except ValueError:
+            print(f"Entrada inválida: {e}")
+    print(f"\nValor total: R${sum(valores):.2f}")
 
-selecionar_itens()
+if __name__ == "__main__":
+    selecionar_itens()

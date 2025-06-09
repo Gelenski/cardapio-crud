@@ -4,8 +4,9 @@ def captura_nome_restaurante():
         nome = input("Digite o nome do restaurante: ")
         if nome == "":
             print("O nome do restaurante não pode ser vazio.")
-        return nome
-    
+        else:
+            return nome
+
 def captura_porcentagem_garcom():
     """Captura a porcentagem do garçom"""
     while True:
