@@ -1,1 +1,0 @@
-CAMINHO_CARDAPIO = "cardapio.txt"
