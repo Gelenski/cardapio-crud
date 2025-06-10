@@ -88,18 +88,21 @@ def imprimir_itens():
 
 def selecionar_itens():
     lista = imprimir_itens()
-    valores = []
-    escolha = input("\nDigite os números dos itens que deseja (separados por vírgula): ").split(',')
-    for e in escolha:
-        try:
-            indice = int(e.strip())
-            for i in lista:
-                if i['indice'] == indice:
-                    print(f"- {i['nome']} - R${i['preco']:.2f}")
-                    valores.append(i['preco'])
-        except:
-            print(f"Entrada inválida: {e}")
-    print(f"\nValor total: R${sum(valores):.2f}")
+    if lista:
+        valores = []
+        escolha = input("\nDigite os números dos itens que deseja (separados por vírgula): ").split(',')
+        for e in escolha:
+            try:
+                indice = int(e.strip())
+                for i in lista:
+                    if i['indice'] == indice:
+                        print(f"- {i['nome']} - R${i['preco']:.2f}")
+                        valores.append(i['preco'])
+            except:
+                print(f"Entrada inválida: {e}")
+        print(f"\nValor total: R${sum(valores):.2f}")
+    else:
+        print('\nO cardápio está vazio.')
 
 def main():
     cardapio, nome_restaurante, porcentagem_garcom = carregar_cardapio(CAMINHO_CARDAPIO)
@@ -119,10 +122,9 @@ def main():
         print("1. Ver Cardápio")
         print("2. Incluir item")
         print("3. Excluir item")
-        print("6. Limpar o cardápio")
-        print("7. Encerrar e salvar o cardápio")
-
-        print("8. Fechar caixa")
+        print("4. Limpar o cardápio")
+        print("5. Fechar caixa")
+        print("6. Encerrar e salvar o cardápio")
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
             ver_cardapio(cardapio)
@@ -130,14 +132,15 @@ def main():
             incluir_item(cardapio)
         elif opcao == "3":
             excluir_item(cardapio)
-        elif opcao == "6":
+        elif opcao == "4":
             limpar_cardapio(cardapio)
-        elif opcao == "7":
+        elif opcao == "5":
+            salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
+            selecionar_itens()
+        elif opcao == "6":
             print("Fechando cardápio.")
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
-        elif opcao == "8":
-            selecionar_itens()
         else:
             print("Escolha inválida, digite uma opção válida.")
 
