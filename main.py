@@ -141,22 +141,17 @@ def main():
         print("1. Ver Cardápio")
         print("2. Incluir item")
         print("3. Excluir item")
-<<<<<<< HEAD
-        print("4. Editar item")
-        print("5. Limpar Cardápio")
-        print("6. Encerrar e salvar o cardápio")
-=======
         print("6. Limpar o cardápio")
         print("7. Encerrar e salvar o cardápio")
 
->>>>>>> 55c18061c5c7ec6e36ec1e75ec387e5e9e8a8758
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
             ver_cardapio(cardapio)
         elif opcao == "2":
             incluir_item(cardapio)
         elif opcao == "3":
-            editar_item(cardapio)
+            # editar_item(cardapio)
+            ...
         elif opcao == "4":
             excluir_item(cardapio)
         elif opcao == "5":
