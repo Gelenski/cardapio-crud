@@ -64,6 +64,18 @@ def excluir_item(cardapio):
     tipo = selecionar_categoria()
     if not tipo:
         return
+    for categoria in cardapio:
+        if categoria['categoria'].lower() == tipo.lower():
+            if not categoria['itens']:
+                print(f"A categoria '{tipo}' está vazia.")
+                return
+            print(f"\nItens da categoria '{tipo}':")
+            for item in categoria['itens']:
+                print(f"• {item['nome']} - R${item['preco']:.2f}")
+            break
+    else:
+        print(f"A categoria '{tipo}' não foi encontrada.")
+        return
     nome = input(f"Nome do item a remover da categoria '{tipo}': ").strip()
     if not nome:
         print("Nome não pode estar em branco.")
@@ -84,15 +96,15 @@ def limpar_cardapio(cardapio):
     #TODO: Implementar na def main --------------------------------
 
 def buscar_item(item):
-    cardapio, _,_ = carregar_cardapio(CAMINHO_CARDAPIO)
+    cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     for categoria in cardapio:
         for comida in categoria["itens"]:
             if comida["nome"].lower() == item.lower():
-                print(f"O item: {comida["nome"]}, está contido no cardápio.")
+                print(f"O item: {comida['nome']} está contido no cardápio.")
                 return True
-            else:
-                print("O item digitado não está contido no cardápio.")
-                return False
+    print("O item digitado não está contido no cardápio.")
+    return False
+
         
 def imprimir_itens():
     cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
@@ -130,7 +142,6 @@ def main():
     cardapio, nome_restaurante, porcentagem_garcom = carregar_cardapio(CAMINHO_CARDAPIO)
 
     if not cardapio:
-        # print("Nenhum cardápio encontrado. Criando um novo.")
         cardapio = []
 
     if not nome_restaurante:
@@ -147,30 +158,27 @@ def main():
         print("4. Limpar o cardápio")
         print("5. Fechar caixa")
         print("6. Encerrar e salvar o cardápio")
+
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
             ver_cardapio(cardapio)
         elif opcao == "2":
             incluir_item(cardapio)
         elif opcao == "3":
-            # editar_item(cardapio)
-            ...
-        elif opcao == "4":
             excluir_item(cardapio)
-        elif opcao == "5":
         elif opcao == "4":
             limpar_cardapio(cardapio)
-        elif opcao == "6":
         elif opcao == "5":
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             selecionar_itens()
         elif opcao == "6":
             print("Fechando cardápio.")
-            buscar_item("Macarrão")
+            buscar_item("Macarrão")  # opcional: substitua por input
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
         else:
             print("Escolha inválida, digite uma opção válida.")
+
 
 if __name__ == "__main__":
     main()
