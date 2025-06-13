@@ -18,7 +18,7 @@ def selecionar_categoria():
         else:
             print("Número inválido.")
             return None
-    except ValueError:
+    except:
         print("Entrada inválida. Digite um número.")
         return None
 
@@ -30,6 +30,15 @@ def ver_cardapio(cardapio):
         print(f"\n{categoria['categoria'].capitalize()}:")
         for item in categoria['itens']:
             print(f"• {item['nome']} - R${item['preco']:.2f}")
+
+# def editar_item(cardapio):
+#     tipo=selecionar_categoria()
+#     if not tipo:
+#         return
+#     nome = input(f"Nome do item a editar na categoria '{tipo}': ").strip()
+#     if not nome:
+#         print("Nome não pode estar em branco.")
+#         return
 
 def incluir_item(cardapio):
     tipo = selecionar_categoria()
@@ -72,6 +81,19 @@ def limpar_cardapio(cardapio):
     cardapio.clear()
     print("Cardápio foi limpo com sucesso.")
 
+    #TODO: Implementar na def main --------------------------------
+
+def buscar_item(item):
+    cardapio, _,_ = carregar_cardapio(CAMINHO_CARDAPIO)
+    for categoria in cardapio:
+        for comida in categoria["itens"]:
+            if comida["nome"].lower() == item.lower():
+                print(f"O item: {comida["nome"]}, está contido no cardápio.")
+                return True
+            else:
+                print("O item digitado não está contido no cardápio.")
+                return False
+        
 def imprimir_itens():
     cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     lista = []
@@ -131,14 +153,20 @@ def main():
         elif opcao == "2":
             incluir_item(cardapio)
         elif opcao == "3":
+            # editar_item(cardapio)
+            ...
+        elif opcao == "4":
             excluir_item(cardapio)
+        elif opcao == "5":
         elif opcao == "4":
             limpar_cardapio(cardapio)
+        elif opcao == "6":
         elif opcao == "5":
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             selecionar_itens()
         elif opcao == "6":
             print("Fechando cardápio.")
+            buscar_item("Macarrão")
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
         else:
