@@ -24,21 +24,52 @@ def selecionar_categoria():
 
 def ver_cardapio(cardapio):
     if not cardapio:
-        print("Cardápio vazio no momento.")
+        print("\nCardápio vazio no momento.")
         return
     for categoria in cardapio:
         print(f"\n{categoria['categoria'].capitalize()}:")
         for item in categoria['itens']:
             print(f"• {item['nome']} - R${item['preco']:.2f}")
 
-# def editar_item(cardapio):
-#     tipo=selecionar_categoria()
-#     if not tipo:
-#         return
-#     nome = input(f"Nome do item a editar na categoria '{tipo}': ").strip()
-#     if not nome:
-#         print("Nome não pode estar em branco.")
-#         return
+def editar_item(cardapio):
+    tipo = selecionar_categoria()
+    if not tipo:
+        return
+
+    for categoria in cardapio:
+        if categoria['categoria'].lower() == tipo.lower():
+            if not categoria['itens']:
+                print(f"\nA categoria '{tipo}' está vazia.")
+                return
+            print(f"\nItens da categoria '{tipo}':")
+            for item in categoria['itens']:
+                print(f"• {item['nome']} - R${item['preco']:.2f}")
+            break
+    else:
+        print(f"A categoria '{tipo}' está vazia")
+        return
+
+    nome = input(f"\nDigite o nome do item que deseja editar: ").strip()
+    if not nome:
+        print("Nome não pode estar em branco.")
+        return
+
+    for item in categoria['itens']:
+        if item['nome'].lower() == nome.lower():
+            print(f"Item encontrado: {item['nome']} - R${item['preco']:.2f}")
+            novo_nome = input("Novo nome (Enter para manter): ").strip() or item['nome']
+            try:
+                novo_preco = input("Novo preço (Enter para manter): ").strip()
+                item['preco'] = float(novo_preco.replace(",", ".")) if novo_preco else item['preco']
+            except:
+                print("Preço inválido. Mantido o preço anterior.")
+            item['nome'] = novo_nome
+            print("Item atualizado com sucesso.")
+            return
+
+    print(f"O item '{nome}' não foi encontrado na categoria '{tipo}'.")
+
+
 
 def incluir_item(cardapio):
     tipo = selecionar_categoria()
@@ -156,8 +187,10 @@ def main():
         print("2. Incluir item")
         print("3. Excluir item")
         print("4. Limpar o cardápio")
-        print("5. Fechar caixa")
-        print("6. Encerrar e salvar o cardápio")
+        print("5. Buscar item")
+        print("6. Alterar item")
+        print("7. Fechar caixa")
+        print("8. Encerrar e salvar o cardápio")
 
         opcao = input("Selecione uma das opções: ")
         if opcao == "1":
@@ -169,11 +202,17 @@ def main():
         elif opcao == "4":
             limpar_cardapio(cardapio)
         elif opcao == "5":
+            nome_item = input("Digite o nome do item que deseja buscar: ").strip()
+            salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
+            buscar_item(nome_item)
+        elif opcao == "6":
+            salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
+            editar_item(cardapio)
+        elif opcao == "7":
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             selecionar_itens()
-        elif opcao == "6":
+        elif opcao == "8":
             print("Fechando cardápio.")
-            buscar_item("Macarrão")  # opcional: substitua por input
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
             break
         else:
