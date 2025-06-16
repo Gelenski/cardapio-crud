@@ -124,8 +124,6 @@ def limpar_cardapio(cardapio):
     cardapio.clear()
     print("Cardápio foi limpo com sucesso.")
 
-    #TODO: Implementar na def main --------------------------------
-
 def buscar_item(item):
     cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     for categoria in cardapio:
@@ -136,7 +134,6 @@ def buscar_item(item):
     print("O item digitado não está contido no cardápio.")
     return False
 
-        
 def imprimir_itens():
     cardapio, _, _ = carregar_cardapio(CAMINHO_CARDAPIO)
     lista = []
