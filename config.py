@@ -41,17 +41,17 @@ def carregar_cardapio(caminho):
 def captura_nome_restaurante():
     """Captura o nome do restaurante"""
     while True:
-        nome = input("Digite o nome do restaurante: \n")
-        if nome == "":
+        nome_restaurante = input("Digite o nome do restaurante: \n")
+        if nome_restaurante == "":
             print("O nome do restaurante não pode ser vazio, digite novamente.")
         else:
-            return nome
+            return nome_restaurante
 
 def captura_porcentagem_garcom():
     """Captura a porcentagem do garçom"""
     while True:
-        porcentagem = input("Digite a porcentagem dos garçons do restaurante: \n")
-        if porcentagem.replace(".", "", 1).isdigit():
-            return float(porcentagem)
+        porcentagem_garcom = input("Digite a porcentagem dos garçons do restaurante: \n")
+        if porcentagem_garcom.replace(".", "", 1).isdigit():
+            return float(porcentagem_garcom)
         else:
             print("Digite um número válido.")

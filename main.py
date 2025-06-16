@@ -151,7 +151,7 @@ def imprimir_itens():
             contador += 1
     return lista
 
-def selecionar_itens():
+def selecionar_itens(porcentagem_garcom):
     lista = imprimir_itens()
     if lista:
         valores = []
@@ -165,13 +165,15 @@ def selecionar_itens():
                         valores.append(i['preco'])
             except:
                 print(f"Entrada inválida: {e}")
-        print(f"\nValor total: R${sum(valores):.2f}")
+        total = sum(valores)
+        print(f"\nValor total da compra: R${total:.2f}")
+        print(f"O valor da porcentagem do garçom é: {porcentagem_garcom:.0f}%")
+        print(f"\nO Valor total: R${total + (porcentagem_garcom/100 * total):.2f}")
     else:
         print('\nO cardápio está vazio.')
 
 def main():
     cardapio, nome_restaurante, porcentagem_garcom = carregar_cardapio(CAMINHO_CARDAPIO)
-
     if not cardapio:
         cardapio = []
 
@@ -182,7 +184,8 @@ def main():
         porcentagem_garcom = captura_porcentagem_garcom()
 
     while True:
-        print("\n-------- OPÇÕES DISPONÍVEIS --------\n")
+        print("\n-------- OPÇÕES DISPONÍVEIS --------")
+        print(f"Restaurante: {nome_restaurante}\n")
         print("1. Ver Cardápio")
         print("2. Incluir item")
         print("3. Excluir item")
@@ -210,7 +213,7 @@ def main():
             editar_item(cardapio)
         elif opcao == "7":
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
-            selecionar_itens()
+            selecionar_itens(porcentagem_garcom)
         elif opcao == "8":
             print("Fechando cardápio.")
             salvar_cardapio(cardapio, CAMINHO_CARDAPIO, nome_restaurante, porcentagem_garcom)
